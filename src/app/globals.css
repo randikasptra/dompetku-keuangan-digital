@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+
+  /* Vibrant violet brand */
+  --primary: 263.4 70% 50.4%;
+  --primary-foreground: 0 0% 98%;
+
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 270 100% 98%;
+  --accent-foreground: 274.6 61.4% 35.1%;
+
+  /* Destructive Red */
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 263.4 70% 50.4%;
+  --success: 160 84% 39%;
+  --success-foreground: 160 84% 15%;
+  --brand-gradient: linear-gradient(135deg, #7c3aed 0%, #a21caf 52%, #2563eb 100%);
+  --brand-gradient-hover: linear-gradient(135deg, #6d28d9 0%, #86198f 52%, #1d4ed8 100%);
+  --brand-tint: linear-gradient(135deg, rgba(124, 58, 237, 0.11), rgba(192, 38, 211, 0.08), rgba(37, 99, 235, 0.1));
+  --radius: 1rem; /* rounded-2xl is default for Dompetku */
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+
+  --primary: 263.4 70% 60%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+
+  /* Destructive Red */
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 263.4 70% 60%;
+  --success: 160 84% 39%;
+  --success-foreground: 160 84% 85%;
+  --brand-gradient: linear-gradient(135deg, #8b5cf6 0%, #c026d3 52%, #3b82f6 100%);
+  --brand-gradient-hover: linear-gradient(135deg, #7c3aed 0%, #a21caf 52%, #2563eb 100%);
+  --brand-tint: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(192, 38, 211, 0.13), rgba(59, 130, 246, 0.15));
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+
+  --radius-2xl: var(--radius);
+  --radius-xl: calc(var(--radius) - 0.25rem);
+  --radius-lg: calc(var(--radius) - 0.5rem);
+  --radius-md: calc(var(--radius) - 0.75rem);
+  --radius-sm: calc(var(--radius) - 0.875rem);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Roboto Mono, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    background-image:
+      radial-gradient(circle at 92% -8%, rgba(124, 58, 237, 0.07), transparent 26rem),
+      radial-gradient(circle at -8% 56%, rgba(37, 99, 235, 0.04), transparent 22rem);
+    color: var(--color-foreground);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .brand-gradient {
+    background-image: var(--brand-gradient);
+  }
+
+  .brand-gradient-hover:hover {
+    background-image: var(--brand-gradient-hover);
+  }
+
+  .brand-tint {
+    background-image: var(--brand-tint);
+  }
+
+  .brand-gradient-text {
+    background-image: var(--brand-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
 }
