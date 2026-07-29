@@ -73,6 +73,17 @@ export function TransactionForm({
     [categories, group, type]
   );
 
+  // Pengaman di sisi browser untuk data lama yang mungkin tersimpan ganda.
+  const uniquePaymentMethods = useMemo(
+    () =>
+      Array.from(
+        new Map(
+          paymentMethods.map((method) => [method.name.trim().toLocaleLowerCase('id-ID'), method])
+        ).values()
+      ),
+    [paymentMethods]
+  );
+
   function selectType(nextType: 'INCOME' | 'EXPENSE') {
     setType(nextType);
     setCategoryId('');
@@ -300,11 +311,11 @@ export function TransactionForm({
             <select
               id="paymentMethodId"
               name="paymentMethodId"
-              defaultValue={paymentMethods[0]?.id ?? ''}
+              defaultValue={uniquePaymentMethods[0]?.id ?? ''}
               className="flex h-11 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
               required
             >
-              {paymentMethods.map((method) => (
+              {uniquePaymentMethods.map((method) => (
                 <option key={method.id} value={method.id}>
                   {method.name}
                 </option>
@@ -338,7 +349,7 @@ export function TransactionForm({
         <Button
           type="submit"
           size="lg"
-          disabled={pending || !paymentMethods.length}
+          disabled={pending || !uniquePaymentMethods.length}
           className="h-12 w-full rounded-xl text-sm font-bold"
         >
           {pending ? (

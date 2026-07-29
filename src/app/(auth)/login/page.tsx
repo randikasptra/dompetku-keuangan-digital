@@ -37,7 +37,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12 text-slate-900">
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
@@ -46,20 +46,20 @@ export default function LoginPage() {
             alt="Dompetku"
             width={310}
             height={91}
-            className="mx-auto h-auto w-56"
+            className="mx-auto h-auto w-56 mix-blend-multiply"
             priority
           />
-          <p className="text-gray-600 dark:text-gray-400 text-sm">Kelola uangmu tanpa ribet.</p>
+          <p className="text-sm text-slate-500">Kelola uangmu tanpa ribet.</p>
         </div>
 
         {/* Card */}
-        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 sm:p-7">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Masuk</h2>
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+          <h2 className="mb-5 text-center text-xl font-bold text-slate-900">Masuk</h2>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
+              <p className="text-sm text-red-600">{error}</p>
             </div>
           )}
 
@@ -67,7 +67,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Input */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">
                 Email
               </label>
               <input
@@ -79,10 +79,8 @@ export default function LoginPage() {
                 required
                 className={cn(
                   'w-full px-4 py-3 border rounded-xl',
-                  'bg-white dark:bg-gray-800',
-                  'border-gray-300 dark:border-gray-700',
-                  'text-gray-900 dark:text-white',
-                  'placeholder-gray-500 dark:placeholder-gray-400',
+                  'bg-white border-slate-300',
+                  'text-slate-900 placeholder:text-slate-400',
                   'focus:ring-2 focus:ring-primary focus:border-primary',
                   'transition-all duration-200'
                 )}
@@ -91,7 +89,7 @@ export default function LoginPage() {
 
             {/* Password Input */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700">
                 Password
               </label>
               <input
@@ -103,10 +101,8 @@ export default function LoginPage() {
                 required
                 className={cn(
                   'w-full px-4 py-3 border rounded-xl',
-                  'bg-white dark:bg-gray-800',
-                  'border-gray-300 dark:border-gray-700',
-                  'text-gray-900 dark:text-white',
-                  'placeholder-gray-500 dark:placeholder-gray-400',
+                  'bg-white border-slate-300',
+                  'text-slate-900 placeholder:text-slate-400',
                   'focus:ring-2 focus:ring-primary focus:border-primary',
                   'transition-all duration-200'
                 )}
@@ -141,7 +137,7 @@ export default function LoginPage() {
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-slate-600">
               Belum punya akun?{' '}
               <Link href="/register" className="text-primary hover:text-violet-700 font-medium">
                 Daftar

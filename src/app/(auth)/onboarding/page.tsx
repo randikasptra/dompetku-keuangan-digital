@@ -406,7 +406,7 @@ export default function OnboardingPage() {
             alt="Dompetku"
             width={310}
             height={91}
-            className="mx-auto h-auto w-48"
+            className="mx-auto h-auto w-48 mix-blend-multiply"
             priority
           />
         </div>

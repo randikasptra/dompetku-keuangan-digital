@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Dompetku memakai antarmuka terang yang konsisten, termasuk saat perangkat pengguna dark mode. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 47.4% 11.2%;
@@ -104,6 +107,7 @@
     border-color: var(--color-border);
   }
   body {
+    color-scheme: light;
     background-color: var(--color-background);
     background-image:
       radial-gradient(circle at 92% -8%, rgba(124, 58, 237, 0.07), transparent 26rem),

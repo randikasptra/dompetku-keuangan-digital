@@ -72,7 +72,7 @@ export default async function CatatPage() {
 
   await ensureTransactionOptions(user);
 
-  const [categoryOptions, paymentOptions] = await Promise.all([
+  const [categoryOptions, rawPaymentOptions] = await Promise.all([
     db
       .select({
         id: categories.id,
@@ -89,6 +89,12 @@ export default async function CatatPage() {
       .where(and(eq(paymentMethods.userId, user.id), eq(paymentMethods.isActive, true)))
       .orderBy(asc(paymentMethods.name)),
   ]);
+
+  // Data dari onboarding versi lama mungkin berisi metode pembayaran yang sama.
+  // Tampilkan satu opsi saja sambil tetap memakai ID yang valid untuk transaksi.
+  const paymentOptions = Array.from(
+    new Map(rawPaymentOptions.map((method) => [method.name.toLocaleLowerCase('id-ID'), method])).values()
+  );
 
   return (
     <div className="space-y-4 pb-3">

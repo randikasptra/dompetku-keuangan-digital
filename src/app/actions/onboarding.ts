@@ -69,9 +69,20 @@ export async function completeOnboardingAction(data: OnboardingData) {
     selectedMethods.includes(m.name) || selectedMethods.includes(m.type)
   );
 
-  if (methodsToInsert.length > 0) {
+  const existingMethods = await db
+    .select({ name: paymentMethods.name })
+    .from(paymentMethods)
+    .where(eq(paymentMethods.userId, user.id));
+  const existingMethodNames = new Set(
+    existingMethods.map((method) => method.name.toLocaleLowerCase('id-ID'))
+  );
+  const newMethods = methodsToInsert.filter(
+    (method) => !existingMethodNames.has(method.name.toLocaleLowerCase('id-ID'))
+  );
+
+  if (newMethods.length > 0) {
     await db.insert(paymentMethods).values(
-      methodsToInsert.map((m) => ({
+      newMethods.map((m) => ({
         ...m,
         userId: user.id,
         id: undefined,

@@ -75,7 +75,7 @@ export default function RegisterPage() {
             alt="Dompetku"
             width={310}
             height={91}
-            className="mx-auto h-auto w-56"
+            className="mx-auto h-auto w-56 mix-blend-multiply"
             priority
           />
           <p className="text-gray-600 dark:text-gray-400 text-sm">Kelola uangmu tanpa ribet.</p>
