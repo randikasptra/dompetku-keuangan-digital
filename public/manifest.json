@@ -2,7 +2,7 @@
   "name": "Dompetku - Kelola Keuanganmu",
   "short_name": "Dompetku",
   "description": "Aplikasi pencatatan keuangan pribadi untuk mahasiswa dan pekerja muda Indonesia",
-  "start_url": "/",
+  "start_url": "https://dompetku-keuangan-digital.vercel.app/login",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
