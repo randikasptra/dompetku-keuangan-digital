@@ -3,8 +3,7 @@
 import { useState, FormEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { signInAction, signInWithGoogleAction } from '@/app/actions/auth';
-import { Mail } from 'lucide-react';
+import { signInAction } from '@/app/actions/auth';
 import { cn } from '@/lib/utils';
 
 export default function LoginPage() {
@@ -13,7 +12,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,18 +33,6 @@ export default function LoginPage() {
       setError('Terjadi kesalahan. Silakan coba lagi.');
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setIsGoogleLoading(true);
-    setError(null);
-
-    try {
-      await signInWithGoogleAction();
-    } catch (err) {
-      setError('Masuk dengan Google gagal. Silakan coba lagi.');
-      setIsGoogleLoading(false);
     }
   };
 
@@ -78,7 +64,7 @@ export default function LoginPage() {
           )}
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -152,33 +138,6 @@ export default function LoginPage() {
               {isLoading ? 'Sedang masuk...' : 'Masuk'}
             </button>
           </form>
-
-          {/* Divider */}
-          <div className="flex items-center mb-6">
-            <div className="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
-            <span className="px-3 text-sm text-gray-500 dark:text-gray-400">atau</span>
-            <div className="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
-          </div>
-
-          {/* Google Sign In Button */}
-          <button
-            onClick={handleGoogleSignIn}
-            disabled={isGoogleLoading}
-            className={cn(
-              'w-full py-3 px-4 rounded-xl font-medium',
-              'border border-gray-300 dark:border-gray-700',
-              'bg-white dark:bg-gray-800',
-              'text-gray-900 dark:text-white',
-              'hover:bg-gray-50 dark:hover:bg-gray-700',
-              'disabled:opacity-50 disabled:cursor-not-allowed',
-              'transition-colors duration-200',
-              'flex items-center justify-center gap-2',
-              isGoogleLoading && 'opacity-50 cursor-not-allowed'
-            )}
-          >
-            <Mail size={20} />
-            {isGoogleLoading ? 'Sedang masuk...' : 'Masuk dengan Google'}
-          </button>
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center">

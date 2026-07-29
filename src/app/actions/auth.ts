@@ -55,25 +55,6 @@ export async function signInAction(formData: FormData) {
   redirect('/onboarding');
 }
 
-// Server Action for Google OAuth
-export async function signInWithGoogleAction() {
-  const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/onboarding`,
-    },
-  });
-
-  if (error) {
-    return { error: error.message };
-  }
-
-  if (data.url) {
-    redirect(data.url); // Redirect to Google sign-in page
-  }
-}
-
 // Server Action for signout
 export async function signOutAction() {
   const supabase = await createServerSupabaseClient();
