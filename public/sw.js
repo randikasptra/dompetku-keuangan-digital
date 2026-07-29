@@ -1,10 +1,12 @@
-const CACHE_NAME = 'dompetku-v1';
-const RUNTIME_CACHE = 'dompetku-runtime-v1';
+const CACHE_NAME = 'dompetku-static-v2';
+const RUNTIME_CACHE = 'dompetku-runtime-v2';
 
 // Assets to cache on install
 const ASSETS_TO_CACHE = [
-  '/',
   '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
   '/img/logo1.png',
   '/img/logo2.png',
   '/img/logo3.png',
@@ -42,40 +44,37 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Let navigations use the network first so authentication redirects and
+// Next.js server-rendered pages always reflect the current session.
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip cross-origin requests
-  if (url.origin !== self.location.origin) {
+  if (request.method !== 'GET' || url.origin !== self.location.origin) {
     return;
   }
 
-  // Skip API calls - let them go through network
-  if (url.pathname.startsWith('/api/')) {
+  if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
-        .then((response) => {
-          // Clone the response
-          const clonedResponse = response.clone();
-          // Cache successful API responses
-          if (response.status === 200) {
-            caches.open(RUNTIME_CACHE).then((cache) => {
-              cache.put(request, clonedResponse);
-            });
-          }
-          return response;
-        })
-        .catch(() => {
-          // Return cached response if offline
-          return caches.match(request);
-        })
+        .catch(() => caches.match(request))
+        .then((response) => response || Response.error())
     );
     return;
   }
 
-  // For documents, stylesheets, scripts, images
+  // Do not intercept API calls, Server Actions, or App Router/RSC payloads.
+  const isNextStaticAsset = url.pathname.startsWith('/_next/static/');
+  const isPublicStaticAsset =
+    url.pathname === '/manifest.json' ||
+    url.pathname.startsWith('/img/') ||
+    /\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|woff2?)$/i.test(url.pathname);
+
+  if (!isNextStaticAsset && !isPublicStaticAsset) {
+    return;
+  }
+
+  // Hashed/static assets are safe to serve cache-first.
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
@@ -99,11 +98,7 @@ self.addEventListener('fetch', (event) => {
 
           return response;
         })
-        .catch((err) => {
-          console.log('[SW] Fetch failed for', request.url, err);
-          // Return offline page or cached response
-          return caches.match(request);
-        });
+        .catch(() => caches.match(request).then((response) => response || Response.error()));
     })
   );
 });

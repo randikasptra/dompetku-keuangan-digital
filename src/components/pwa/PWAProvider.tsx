@@ -25,9 +25,10 @@ export function PWAProvider() {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/sw.js')
+        .register('/sw.js', { updateViaCache: 'none' })
         .then((registration) => {
           console.log('[PWA] Service Worker registered:', registration.scope);
+          void registration.update();
 
           // Check for updates periodically
           registration.addEventListener('updatefound', () => {
